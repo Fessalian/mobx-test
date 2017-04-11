@@ -6,6 +6,11 @@ import Subheader from 'material-ui/Subheader';
 import { Card, CardActions, CardText, CardHeader } from 'material-ui/Card';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import TextField from 'material-ui/TextField';
+import { blue500 } from 'material-ui/styles/colors';
+import ContentClear from 'material-ui/svg-icons/content/clear';
+import IconButton from 'material-ui/IconButton';
 
 import UserListItemComponent from './list-item'
 
@@ -16,10 +21,33 @@ class UsersListComponent extends Component {
         this.props.route.usersCollection.remove( user );
     }
 
+    handleClearFilter = ( event ) => {
+        event.stopPropagation();
+        this.props.route.usersCollection.filter = '';
+    }
+    handleSetFilter = ( event ) => {
+        event.stopPropagation();
+        this.props.route.usersCollection.filter = event.target.value;
+    }
+
     render () {
-        const { users, count } = this.props.route.usersCollection;
+        const { users, count, filter } = this.props.route.usersCollection;
         return (
             <section>
+                <Toolbar>
+                    <ToolbarGroup>
+                        <ToolbarTitle text="Filter" />
+                        <TextField
+                            hintText="Enter user"
+                            underlineStyle={ { borderColor: blue500 } }
+                            onChange={ this.handleSetFilter }
+                            value={ filter }
+                        />
+                        <IconButton onTouchTap={ this.handleClearFilter } >
+                            <ContentClear />
+                        </IconButton>
+                    </ToolbarGroup>
+                </Toolbar>
                 <Card>
                     <CardHeader title="Users list" />
                     <CardText>

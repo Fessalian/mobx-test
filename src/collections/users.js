@@ -4,18 +4,30 @@ import UserModel from '../models/user'
 
 class UsersCollection {
     @observable usersData = [];
-    @observable filter = false;
+    @observable filter = '';
 
     @computed get users () {
-        return toJS( this.usersData );
+        const users = toJS( this.usersData );
+        if ( this.filter ) {
+            return users.filter( user => user.name.toLowerCase().includes( this.filter )
+                || user.company.toLowerCase().includes( this.filter )
+                || String( user.phone ).includes( this.filter )
+            );
+        };
+
+        return users;
     }
 
-    setFilter ( filterString ) {
-        return this.filter = filterString;
+    set filter ( filterString ) {
+        return this.filter = filterString.toLowerCase();
+    }
+
+    get filter () {
+        return this.filter;
     }
 
     @computed get count () {
-        return this.usersData.length;
+        return this.users.length;
     }
 
     @action( 'Remove user via Users' )
