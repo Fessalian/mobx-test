@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router';
 import { observer } from 'mobx-react';
 import { List } from 'material-ui/List';
@@ -10,7 +10,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import UserListItemComponent from './list-item'
 
 @observer
-class UsersListComponent extends React.Component {
+class UsersListComponent extends Component {
 
     handleDelete = ( user ) => {
         this.props.route.usersCollection.remove( user );

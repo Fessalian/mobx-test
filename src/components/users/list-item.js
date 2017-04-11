@@ -1,18 +1,18 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { observer } from 'mobx-react';
 import { ListItem } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
 
 @observer
-class UserListItemComponent extends React.Component {
+class UserListItemComponent extends Component {
 
     handleToggle = ( event ) => {
         event.stopPropagation();
         this.props.onDelete( this.props.user );
     }
 
-    render() {
+    render () {
         const { id, name, company, phone } = this.props.user;
         return (
             <ListItem

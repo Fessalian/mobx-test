@@ -1,15 +1,13 @@
-import CSSModules from 'react-css-modules';
+import React, { Component } from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import React from 'react';
-import ReactDOM from 'react-dom';
 import DevTool from 'mobx-react-devtools';
-import {observer} from 'mobx-react';
+import { observer } from 'mobx-react';
 
 import styles from './styles.css'
 
 @observer
-class LayoutComponent extends React.Component {
-    render() {
+class LayoutComponent extends Component {
+    render () {
         return (
             <MuiThemeProvider>
                 <div>
