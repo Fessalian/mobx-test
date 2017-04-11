@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PropTypes, Component } from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import DevTool from 'mobx-react-devtools';
 import { observer } from 'mobx-react';
@@ -21,5 +21,9 @@ class LayoutComponent extends Component {
         );
     }
 }
+
+LayoutComponent.propTypes = {
+    children: PropTypes.object.isRequired
+};
 
 export default LayoutComponent;

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PropTypes, Component } from 'react'
 import { observer } from 'mobx-react';
 import { ListItem } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
@@ -39,5 +39,15 @@ class UserListItemComponent extends Component {
         )
     }
 }
+
+UserListItemComponent.propTypes = {
+    user: PropTypes.shape( {
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        company: PropTypes.string.isRequired,
+        phone: PropTypes.number.isRequired,
+    } ),
+    onDelete: PropTypes.func.isRequired
+};
 
 export default UserListItemComponent;

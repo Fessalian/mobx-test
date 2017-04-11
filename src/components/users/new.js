@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PropTypes, Component } from 'react'
 import { Link } from 'react-router';
 import { observer } from 'mobx-react';
 import TextField from 'material-ui/TextField';
@@ -85,5 +85,11 @@ class UsersNewComponent extends Component {
         )
     }
 }
+
+UsersNewComponent.propTypes = {
+    route: PropTypes.shape( {
+        usersCollection: PropTypes.object
+    } )
+};
 
 export default UsersNewComponent;

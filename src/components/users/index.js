@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React, { PropTypes, Component } from 'react'
 import { Link } from 'react-router';
 import { observer } from 'mobx-react';
 import { List } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
-import { Card, CardActions, CardText, CardHeader } from 'material-ui/Card';
+import { Card, CardActions, CardText, CardHeader, CardTitle } from 'material-ui/Card';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
@@ -34,28 +34,38 @@ class UsersListComponent extends Component {
         const { users, count, filter } = this.props.route.usersCollection;
         return (
             <section>
-                <Toolbar>
-                    <ToolbarGroup>
-                        <ToolbarTitle text="Filter" />
-                        <TextField
-                            hintText="Enter user"
-                            underlineStyle={ { borderColor: blue500 } }
-                            onChange={ this.handleSetFilter }
-                            value={ filter }
-                        />
-                        <IconButton onTouchTap={ this.handleClearFilter } >
-                            <ContentClear />
-                        </IconButton>
-                    </ToolbarGroup>
-                </Toolbar>
                 <Card>
-                    <CardHeader title="Users list" />
+
+                    <CardHeader
+                        title="Users list"
+                        actAsExpander={true}
+                        showExpandableButton={true}
+                    />
+
+                    <CardTitle expandable={ true } >
+                        <Toolbar>
+                            <ToolbarGroup>
+                                <ToolbarTitle text="Filter" />
+                                <TextField
+                                    hintText="Enter criteria"
+                                    underlineStyle={ { borderColor: blue500 } }
+                                    onChange={ this.handleSetFilter }
+                                    value={ filter }
+                                />
+                                <IconButton onTouchTap={ this.handleClearFilter } >
+                                    <ContentClear />
+                                </IconButton>
+                            </ToolbarGroup>
+                        </Toolbar>
+                    </CardTitle>
+
                     <CardText>
                         <List>
                             <Subheader>number of users: { count }</Subheader>
                             { users.map( ( user, key ) => <UserListItemComponent key={ key } user={ user } onDelete={ this.handleDelete } /> ) }
                         </List>
                     </CardText>
+
                     <CardActions style={ { textAlign: 'right' } }>
                         <Link to="/new">
                             <FloatingActionButton style={ { marginTop: 50, float: 'right' } } >
@@ -63,10 +73,17 @@ class UsersListComponent extends Component {
                             </FloatingActionButton>
                         </Link>
                     </CardActions>
+
                 </Card>
             </section>
         )
     }
 }
+
+UsersListComponent.propTypes = {
+    route: PropTypes.shape( {
+        usersCollection: PropTypes.object
+    } )
+};
 
 export default UsersListComponent;
