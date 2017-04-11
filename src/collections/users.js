@@ -3,19 +3,24 @@ import { observable, action, computed, toJS } from 'mobx';
 import UserModel from '../models/user'
 
 class UsersCollection {
-    @observable users = [];
+    @observable usersData = [];
+    @observable filter = false;
 
-    get users () {
-        return toJS( this.users );
+    @computed get users () {
+        return toJS( this.usersData );
+    }
+
+    setFilter ( filterString ) {
+        return this.filter = filterString;
     }
 
     @computed get count () {
-        return this.users.length;
+        return this.usersData.length;
     }
 
     @action( 'Remove user via Users' )
     remove ( user ) {
-        this.users = this.users.filter( existedUser => existedUser.id !== user.id );
+        this.usersData = this.usersData.filter( existedUser => existedUser.id !== user.id );
     }
 
     get model () {
@@ -25,8 +30,8 @@ class UsersCollection {
     @action( 'Add new user via Users' )
     add ( { name, company, phone } ) {
         return UserModel
-                    .create( name, company, phone )
-                    .then( result => { this.users.push( result ) } );
+                .create( name, company, phone )
+                .then( result => { this.usersData.push( result ) } );
     }
 
 }
