@@ -18,9 +18,3 @@ Run it
 
 Open the web browser to `http://localhost:8080/`
 
-
-ToDo
-
-Add DialogWindow for deleting
-Add proptypes checking
-

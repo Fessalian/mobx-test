@@ -12,13 +12,30 @@ import { blue500 } from 'material-ui/styles/colors';
 import ContentClear from 'material-ui/svg-icons/content/clear';
 import IconButton from 'material-ui/IconButton';
 
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
+
 import UserListItemComponent from './list-item'
 
 @observer
 class UsersListComponent extends Component {
 
-    handleDelete = ( user ) => {
-        this.props.route.usersCollection.remove( user );
+    constructor ( props ) {
+        super( props );
+        this.requestedUser = undefined;
+        this.state = { dialogOpened: false };
+    }
+
+    handleDelete = ( ) => {
+        this.props.route.usersCollection.remove( this.requestedUser );
+        this.requestedUser = undefined;
+        this.handleToggleDialog();
+    }
+
+    handleRequestDeleting = ( user ) => {
+        this.requestedUser = user;
+        this.setState( { dialogOpened: !this.dialogOpened } );
     }
 
     handleClearFilter = ( event ) => {
@@ -28,6 +45,25 @@ class UsersListComponent extends Component {
     handleSetFilter = ( event ) => {
         event.stopPropagation();
         this.props.route.usersCollection.filter = event.target.value;
+    }
+
+    handleToggleDialog = ( ) => {
+        this.setState( { dialogOpened: !this.state.dialogOpened } );
+    }
+
+    dialogActions () {
+        return [
+            <FlatButton
+                label="CANCEL"
+                primary={ true }
+                onTouchTap={ this.handleToggleDialog }
+            />,
+            <FlatButton
+                label="DELETE"
+                primary={ true }
+                onTouchTap={ this.handleDelete }
+            />,
+        ];
     }
 
     render () {
@@ -62,7 +98,7 @@ class UsersListComponent extends Component {
                     <CardText>
                         <List>
                             <Subheader>number of users: { count }</Subheader>
-                            { users.map( ( user, key ) => <UserListItemComponent key={ key } user={ user } onDelete={ this.handleDelete } /> ) }
+                            { users.map( ( user, key ) => <UserListItemComponent key={ key } user={ user } onDelete={ this.handleRequestDeleting } /> ) }
                         </List>
                     </CardText>
 
@@ -75,6 +111,13 @@ class UsersListComponent extends Component {
                     </CardActions>
 
                 </Card>
+
+                <Dialog
+                    actions={ this.dialogActions() }
+                    modal={ true }
+                    open={ this.state.dialogOpened }
+                    onRequestClose={ this.handleToggleDialog }
+                >Are you sure?</Dialog>
             </section>
         )
     }

@@ -14,6 +14,10 @@ class LayoutComponent extends Component {
                     <DevTool/>
                     <div>
                         <h1>TEST TASK</h1>
+                        <h4>github
+                            &nbsp;
+                            <a href="https://github.com/Fessalian/mobx-test" >https://github.com/Fessalian/mobx-test</a>
+                        </h4>
                         { this.props.children }
                     </div>
                 </div>
