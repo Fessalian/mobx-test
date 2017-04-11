@@ -4,7 +4,8 @@
   "description": "MobX / React / MaterialUI test task ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "NODE_ENV=production webpack -p --config webpack.production.config.js --progress --profile --colors",
+    "dev": "webpack-dev-server --profile --colors --hot --history-api-fallback --debug --watch --inline"
   },
   "repository": {
     "type": "git",
